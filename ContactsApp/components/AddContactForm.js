@@ -1,11 +1,6 @@
 import React from 'react';
 import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
   StyleSheet,
-  Text,
-  useColorScheme,
   Button,
   View,
   TextInput,
@@ -30,16 +25,20 @@ class AddContactForm extends React.Component{
 
     state = {
       name : "",
-      number : ""
+      phone : ""
     }
 
     onChangeName = (name) => {
-      this.setState({name})
-        //this.setState(prevState => ({...prevState, name: text}))
+      if (! +name) {
+        this.setState({name:name})
+      }
     }
     
-    onChangeNumber = (text) => {
-      this.setState(prevState => ({...prevState, number: text}))
+    onChangeNumber = (number) => {
+      console.log(number)
+      if (+number>=0 && number.length<=10){
+        this.setState({phone:number})
+      }
     }
 
     render(){
@@ -54,11 +53,14 @@ class AddContactForm extends React.Component{
           <TextInput
             style = {styles.input}
             placeholder='Number'
-            value = {this.state.number}
+            value = {this.state.phone}
             onChangeText={this.onChangeNumber}
             keyboardType='numeric'
           />
-          <Button title = "Submit" onPress={()=>{this.props.handleSubmit(this.state)}}/>
+          <Button 
+            title = "Submit" 
+            onPress={()=>{this.props.handleSubmit(this.state)}}
+            />
         </View>
       )
     }

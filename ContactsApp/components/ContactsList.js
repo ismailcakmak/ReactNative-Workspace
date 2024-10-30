@@ -15,16 +15,13 @@ ContactList = props => {
 
     sections = {}
 
-    //create a temp objects 
-    const alphabet = 'abcdefghijklmnopqrstuvwxyz';
-    alphabet.split('').forEach(letter => 
-        sections[letter.toUpperCase()] = []
-    )
-    
     //add contacts to this object
     props.contacts.forEach( contact => {
         const firstLetter = contact.name[0]
-        sections[firstLetter].push(contact)
+        if (firstLetter in sections)
+            sections[firstLetter].push(contact)
+        else
+            sections[firstLetter] = [contact]
     })
 
     //turn this object into a list

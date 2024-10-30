@@ -2,16 +2,9 @@
 import React from 'react';
 
 import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
   Button,
+  TouchableOpacity,
   View,
-  FlatList,
-  SectionList,
 } from 'react-native';
 
 import contacts from './scripts/contacts'
@@ -23,18 +16,17 @@ import AddContactForm from './components/AddContactForm.js'
 class App extends React.Component{
 
   state = {
-    showContacts : true,
-    addNewContact : false,
+    showContacts : true,   //for toggling contacts
+    addNewContact : false, //for opening/closing addContactForm 
     contacts : contacts
   }
 
   toggleContact = () => {
-    this.setState({showContacts: !this.state.showContacts})
-    //this.setState(prevState => ({showContacts: !prevState.showContacts}))
+    this.setState(prevState => ({showContacts: !prevState.showContacts}))
   }
   
   addNewContact = () => {
-    this.setState(prevState => ({...prevState, addNewContact : !prevState.addNewContact}))
+    this.setState(prevState => ({addNewContact : !prevState.addNewContact}))
   }
 
   handleSubmit = (obj) => {
@@ -43,7 +35,6 @@ class App extends React.Component{
       const lastKey = prevState.contacts[prevState.contacts.length-1].key
       return (
         {
-        ...prevState, 
         contacts: [
             ...prevState.contacts, 
             {...obj, key: lastKey+1}
@@ -53,7 +44,7 @@ class App extends React.Component{
   }
 
   render(){
-    console.log(this.state.contacts)
+    //open addContactForm
     if(this.state.addNewContact){
       return (
         <View>
@@ -61,7 +52,8 @@ class App extends React.Component{
         </View>
       )
     }
-
+    
+    //main page
     return (
       <View>
         <Button title="Toogle Contacts" onPress={this.toggleContact}/>
