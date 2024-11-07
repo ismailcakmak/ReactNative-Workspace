@@ -8,12 +8,16 @@ import {
 
 
 const styles = StyleSheet.create({
-
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+  },
   input: {
     borderWidth: 1,
     borderColor: 'black',
     minWidth: 100,
-    marginTop: 10,
+    marginTop: 20,
     marginHorizontal: 20,
     paddingHorizontal: 10,
     paddingVertical: 5,
@@ -25,7 +29,19 @@ class AddContactForm extends React.Component{
 
     state = {
       name : "",
-      phone : ""
+      phone : "",
+      isFormValid : false,
+    }
+
+    componentDidUpdate(prevProps, prevState){
+      if (prevState.name !== this.state.name || prevState.phone !== this.state.phone) {
+        if(this.state.name.length>=3 && +this.state.phone>999999999){
+          this.setState({isFormValid:true})
+        }
+        else{
+          this.setState({isFormValid:false})
+        } 
+      }
     }
 
     onChangeName = (name) => {
@@ -58,7 +74,9 @@ class AddContactForm extends React.Component{
             keyboardType='numeric'
           />
           <Button 
+            style = {styles.button}
             title = "Submit" 
+            disabled = {!this.state.isFormValid}
             onPress={()=>{this.props.handleSubmit(this.state)}}
             />
         </View>
