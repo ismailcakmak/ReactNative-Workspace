@@ -39,7 +39,7 @@ ContactList = props => {
     )
 }
 
-ContactList.PropTypes = {
+ContactList.propTypes = {
     contacts : PropTypes.array,
 }
 
